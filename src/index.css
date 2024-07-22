@@ -1,0 +1,26 @@
+.sider {
+  height: 100vh;
+  position: sticky;
+  left: 0;
+  bottom: 0;
+  top: 0;
+}
+
+.logo {
+  width: 120px;
+}
+
+.header {
+  padding-top: 12px;
+  background: #fff;
+}
+
+.content {
+  margin: 24px 16px;
+  padding: 20px;
+}
+
+.ant-menu-item-selected {
+  background-color: #4f6f52;
+  color: #fff;
+}
