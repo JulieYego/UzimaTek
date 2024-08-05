@@ -8,9 +8,9 @@ import {
   message,
   Row,
   Col,
-  DatePicker,
   Select,
 } from 'antd';
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import '../styles.css';
 
 const { Search } = Input;
@@ -36,7 +36,6 @@ const Practitioner = () => {
     },
     {
       id: 2,
-      PractitionerNumber: '002',
       firstName: 'Jane',
       middleName: 'B.',
       lastName: 'Smith',
@@ -62,8 +61,9 @@ const Practitioner = () => {
   const handleSearch = (value) => {
     const filteredPractitioners = dummyPractitioners.filter(
       (practitioner) =>
-        practitioner.firstName.toLowerCase().includes(value.toLowerCase()) ||
-        practitioner.lastName.toLowerCase().includes(value.toLowerCase())
+        `${practitioner.firstName} ${practitioner.middleName} ${practitioner.lastName}`
+          .toLowerCase()
+          .includes(value.toLowerCase())
     );
     setPractitioners(filteredPractitioners);
   };
@@ -115,10 +115,11 @@ const Practitioner = () => {
   };
 
   const columns = [
-    { title: 'First Name', dataIndex: 'firstName', key: 'firstName' },
-    { title: 'Middle Name', dataIndex: 'middleName', key: 'middleName' },
-    { title: 'Last Name', dataIndex: 'lastName', key: 'lastName' },
-
+    {
+      title: 'Name',
+      key: 'name',
+      render: (text, record) => `${record.firstName} ${record.middleName} ${record.lastName}`,
+    },
     { title: 'Email', dataIndex: 'email', key: 'email' },
     { title: 'Phone Number', dataIndex: 'phoneNumber', key: 'phoneNumber' },
     {
@@ -129,13 +130,20 @@ const Practitioner = () => {
     {
       title: 'Actions',
       key: 'actions',
-      width: '150px',
+      width: '100px',
       render: (text, record) => (
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Button onClick={() => handleEditPractitioner(record)}>Edit</Button>
-          <Button onClick={() => handleDeletePractitioner(record.id)} danger>
-            Delete
-          </Button>
+          <Button
+            icon={<EditOutlined />}
+            style={{ fontSize: '12px', color: '#1890ff' }}
+            onClick={() => handleEditPractitioner(record)}
+          />
+          <Button
+            icon={<DeleteOutlined />}
+            style={{ fontSize: '12px', color: '#ff4d4f' }}
+            onClick={() => handleDeletePractitioner(record.id)}
+            danger
+          />
         </div>
       ),
     },
@@ -167,6 +175,7 @@ const Practitioner = () => {
         loading={loading}
         rowKey='id'
         pagination={{ pageSize: 5, hideOnSinglePage: true }}
+        scroll={{ x: 'max-content' }} // Allow horizontal scrolling if needed
       />
       <Modal
         title={editingPractitioner ? 'Edit Practitioner' : 'Add Practitioner'}
@@ -178,7 +187,7 @@ const Practitioner = () => {
           <Row gutter={16}>
             <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
               <Form.Item
-                name='first_name'
+                name='firstName'
                 label='First Name'
                 rules={[
                   { required: true, message: 'Please enter the first name' },
@@ -188,13 +197,13 @@ const Practitioner = () => {
               </Form.Item>
             </Col>
             <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
-              <Form.Item name='middle_name' label='Middle Name'>
+              <Form.Item name='middleName' label='Middle Name'>
                 <Input />
               </Form.Item>
             </Col>
             <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
               <Form.Item
-                name='last_name'
+                name='lastName'
                 label='Last Name'
                 rules={[
                   { required: true, message: 'Please enter the last name' },
@@ -209,12 +218,12 @@ const Practitioner = () => {
               </Form.Item>
             </Col>
             <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
-              <Form.Item name='phone_number' label='Phone Number'>
+              <Form.Item name='phoneNumber' label='Phone Number'>
                 <Input />
               </Form.Item>
             </Col>
             <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
-              <Form.Item name='specialization_id' label='Specialization'>
+              <Form.Item name='specialization' label='Specialization'>
                 <Select>
                   <Option value='General'>General</Option>
                   <Option value='Pediatric'>Pediatric</Option>

@@ -1,17 +1,16 @@
 import { Flex, Menu } from 'antd';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import {
+  HomeOutlined,
+  AppstoreOutlined,
+  UserOutlined,
+  TeamOutlined,
+  SolutionOutlined,
+} from '@ant-design/icons';
 
 const Sidebar = () => {
   const navigate = useNavigate();
-
-  const items = [
-    { key: '/', label: 'Home' },
-    { key: '/facilities', label: 'Facilities' },
-    { key: '/patients', label: 'Patients' },
-    { key: '/referrals', label: 'Referrals' },
-    { key: '/practitioners', label: 'Practitioner' },
-  ];
 
   return (
     <>
@@ -29,9 +28,24 @@ const Sidebar = () => {
         mode='inline'
         defaultSelectedKeys={[]}
         className='sidebar'
-        items={items}
         onClick={({ key }) => navigate(key)}
-      />
+      >
+        <Menu.Item key='/' icon={<HomeOutlined />}>
+          Home
+        </Menu.Item>
+        <Menu.Item key='/facilities' icon={<AppstoreOutlined />}>
+          Facilities
+        </Menu.Item>
+        <Menu.Item key='/patients' icon={<UserOutlined />}>
+          Patients
+        </Menu.Item>
+        <Menu.Item key='/referrals' icon={<SolutionOutlined />}>
+          Referrals
+        </Menu.Item>
+        <Menu.Item key='/practitioners' icon={<TeamOutlined />}>
+          Practitioners
+        </Menu.Item>
+      </Menu>
     </>
   );
 };

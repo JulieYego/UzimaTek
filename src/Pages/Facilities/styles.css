@@ -1,8 +1,119 @@
 .facilities {
-  padding: 20px;
-  background-color: #f0f2f5;
+  padding: 16px;
 }
 
-.facilities h1 {
-  margin-bottom: 20px;
+.table-header {
+  margin-bottom: 8px;
+}
+
+.search-bar {
+  width: 100%;
+}
+
+.add-button-container {
+  text-align: right;
+}
+
+.ant-table {
+  margin-top: 8px;
+}
+
+.ant-table-cell {
+  padding: 8px;
+}
+
+.ant-table-thead > tr > th {
+  padding: 8px;
+  font-size: 0.875rem;
+}
+
+.ant-table-tbody > tr > td {
+  padding: 8px;
+  font-size: 0.75rem;
+}
+
+.ant-btn {
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 0.75rem;
+}
+
+.ant-modal-content {
+  border-radius: 8px;
+}
+
+.ant-form-item {
+  margin-bottom: 8px;
+}
+
+.ant-form-item-label > label {
+  font-weight: bold;
+  font-size: 0.75rem;
+}
+
+.ant-input,
+.ant-btn {
+  border-radius: 4px;
+  font-size: 0.75rem;
+}
+
+.facility-modal .ant-form-item-label > label {
+  font-size: 0.75rem;
+}
+
+.actions-container {
+  display: flex;
+  justify-content: center;
+}
+
+.action-icon {
+  font-size: 1.25rem;
+  margin: 0 4px;
+  transition: color 0.3s;
+}
+
+.edit-icon:hover {
+  color: #1890ff;
+}
+
+.delete-icon:hover {
+  color: #ff4d4f;
+}
+
+.action-icon:hover + .action-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+.action-text {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s, visibility 0.3s;
+  font-size: 0.75rem;
+  margin-left: 4px;
+}
+
+@media (max-width: 768px) {
+  .table-header {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .add-button-container {
+    text-align: center;
+    margin-top: 8px;
+  }
+
+  .ant-form-item-label > label,
+  .ant-table-cell,
+  .ant-table-thead > tr > th,
+  .ant-table-tbody > tr > td,
+  .ant-btn,
+  .ant-input {
+    font-size: 0.65rem;
+  }
+
+  .action-icon {
+    font-size: 1rem;
+  }
 }

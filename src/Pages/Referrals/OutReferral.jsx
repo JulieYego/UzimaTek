@@ -11,6 +11,7 @@ import {
   DatePicker,
   Select,
 } from 'antd';
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import '../styles.css';
 
 const { Search } = Input;
@@ -60,8 +61,8 @@ const OutReferral = () => {
   const handleSearch = (value) => {
     const filteredOutreferrals = dummyOutreferrals.filter(
       (outreferral) =>
-        outreferral.firstName.toLowerCase().includes(value.toLowerCase()) ||
-        outreferral.lastName.toLowerCase().includes(value.toLowerCase())
+        outreferral.patientName.toLowerCase().includes(value.toLowerCase()) ||
+        outreferral.facilityName.toLowerCase().includes(value.toLowerCase())
     );
     setOutreferrals(filteredOutreferrals);
   };
@@ -121,18 +122,23 @@ const OutReferral = () => {
       key: 'practitionerName',
     },
     { title: 'Entry Date', dataIndex: 'entryDate', key: 'entryDate' },
-
     { title: 'Reason', dataIndex: 'reason', key: 'reason' },
     {
       title: 'Actions',
       key: 'actions',
-      width: '150px',
+      width: '100px',
       render: (text, record) => (
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Button onClick={() => handleEditOutreferral(record)}>Edit</Button>
-          <Button onClick={() => handleDeleteOutreferral(record.id)} danger>
-            Delete
-          </Button>
+          <Button
+            icon={<EditOutlined style={{ fontSize: '12px' , color: '#1890ff' }} />}
+            onClick={() => handleEditOutreferral(record)}
+            style={{ marginRight: 8 }}
+          />
+          <Button
+            icon={<DeleteOutlined style={{ fontSize: '12px' }} />}
+            onClick={() => handleDeleteOutreferral(record.id)}
+            danger
+          />
         </div>
       ),
     },
@@ -175,7 +181,7 @@ const OutReferral = () => {
           <Row gutter={16}>
             <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
               <Form.Item
-                name='patient_name'
+                name='patientName'
                 label='Patient Name'
                 rules={[
                   { required: true, message: 'Please enter the patient name' },
@@ -186,7 +192,7 @@ const OutReferral = () => {
             </Col>
             <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
               <Form.Item
-                name='facility_name'
+                name='facilityName'
                 label='Facility Name'
                 rules={[
                   { required: true, message: 'Please enter the facility name' },
@@ -197,7 +203,7 @@ const OutReferral = () => {
             </Col>
             <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
               <Form.Item
-                name='practitioner_name'
+                name='practitionerName'
                 label='Practitioner Name'
                 rules={[
                   {
