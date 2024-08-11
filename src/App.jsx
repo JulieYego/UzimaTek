@@ -1,5 +1,16 @@
-// import './App.css';
+import React, { useState } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Layout, Menu, Grid } from 'antd';
+import {
+  HomeOutlined,
+  AppstoreOutlined,
+  UserOutlined,
+  TeamOutlined,
+  SolutionOutlined,
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+} from '@ant-design/icons';
+
 import Login from './Auth/Login';
 import Home from './Pages/Home';
 import Facilities from './Pages/Facilities/Facilities';
@@ -8,77 +19,78 @@ import Practitioner from './Pages/Practitioner/Practitioner';
 import InReferral from './Pages/Referrals/InReferral';
 import OutReferral from './Pages/Referrals/OutReferral';
 import Referrals from './Pages/Referrals/Referrals';
-import { Flex, Menu, Layout } from 'antd';
-import { useState } from 'react';
-import Sidebar from './Sidebar';
 import './index.css';
 
 const { Content, Header, Sider } = Layout;
+const { useBreakpoint } = Grid;
 
-function App() {
+const App = () => {
   const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
+  const screens = useBreakpoint();
+
   const items = [
-    { key: '/', label: 'Home' },
-    { key: '/facilities', label: 'Facilities' },
-    { key: '/patients', label: 'Patients' },
-    { key: '/referrals', label: 'Referrals' },
-    { key: '/practitioners', label: 'Practitioner' },
+    { key: '/', label: 'Home', icon: <HomeOutlined /> },
+    { key: '/facilities', label: 'Facilities', icon: <AppstoreOutlined /> },
+    { key: '/patients', label: 'Patients', icon: <UserOutlined /> },
+    { key: '/referrals', label: 'Referrals', icon: <SolutionOutlined /> },
+    { key: '/practitioners', label: 'Practitioner', icon: <TeamOutlined /> },
   ];
+
+  const toggleCollapsed = () => {
+    setCollapsed(!collapsed);
+  };
+
+  const handleLogoClick = () => {
+    navigate('/');
+  };
 
   return (
     <Layout>
       <Sider
-        theme='light'
+        theme="light"
         trigger={null}
         collapsible
         collapsed={collapsed}
-        className='sider'
+        breakpoint="md"
+        onBreakpoint={(broken) => {
+          setCollapsed(broken);
+        }}
+        className="sider"
       >
-        <Flex align='center' justify='center'>
-          <div className='logo'>
-            <img
-              src='src/assets/Logo_transparent.png'
-              alt='Logo'
-              className='logo'
-            />
-          </div>
-        </Flex>
-
+        <div className="logo" onClick={handleLogoClick}>
+          <img src="src/assets/Logo_transparent.png" alt="Logo" className="logo-img" />
+        </div>
         <Menu
-          mode='inline'
+          mode="inline"
           defaultSelectedKeys={[]}
-          className='sidebar'
+          className="sidebar"
           items={items}
           onClick={({ key }) => navigate(key)}
         />
       </Sider>
       <Layout>
-        <Header></Header>
-        {/* <Content className='content'>
-          <Facilities />
-        </Content> */}
-        <Content />
+        <Header className="header">
+          {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
+            className: 'trigger',
+            onClick: toggleCollapsed,
+          })}
+        </Header>
+        <Content className="content">
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/facilities" element={<Facilities />} />
+            <Route path="/patients" element={<Patients />} />
+            <Route path="/practitioners" element={<Practitioner />} />
+            <Route path="/referrals" element={<Referrals />} />
+            <Route path="/inreferral" element={<InReferral />} />
+            <Route path="/outreferral" element={<OutReferral />} />
+          </Routes>
+        </Content>
       </Layout>
     </Layout>
   );
-
-  function Content() {
-    return (
-      <div>
-        <Routes>
-          <Route path='/login' element={<Login />} />
-          <Route path='/' element={<Home />} />
-          <Route path='/facilities' element={<Facilities />} />
-          <Route path='/patients' element={<Patients />} />
-          <Route path='/practitioners' element={<Practitioner />} />
-          <Route path='/referrals' element={<Referrals />} />
-          <Route path='/inreferral' element={<InReferral />} />
-          <Route path='/outreferral' element={<OutReferral />} />
-        </Routes>
-      </div>
-    );
-  }
-}
+};
 
 export default App;

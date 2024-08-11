@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Input, Button, Modal, Form, message, Row, Col } from 'antd';
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import './styles.css';
 
 const { Search } = Input;
@@ -61,7 +62,6 @@ const Facilities = () => {
   const handleSubmit = (values) => {
     setLoading(true);
     setTimeout(() => {
-      // Simulating a delay for submit
       if (editingFacility) {
         setFacilities(
           facilities.map((facility) =>
@@ -89,10 +89,17 @@ const Facilities = () => {
       width: '100px',
       render: (text, record) => (
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Button onClick={() => handleEditFacility(record)}>Edit</Button>
-          <Button onClick={() => handleDeleteFacility(record.id)} danger>
-            Delete
-          </Button>
+          <Button
+            icon={<EditOutlined />}
+            style={{ fontSize: '16px', color: '#1890ff' }}
+            onClick={() => handleEditFacility(record)}
+          />
+          <Button
+            icon={<DeleteOutlined />}
+            style={{ fontSize: '16px', color: '#ff4d4f' }}
+            onClick={() => handleDeleteFacility(record.id)}
+            danger
+          />
         </div>
       ),
     },
@@ -104,29 +111,21 @@ const Facilities = () => {
 
       <Table
         title={() => (
-          <>
-            <Row>
-              <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
-                <Search
-                  placeholder='Search facilities'
-                  onSearch={handleSearch}
-                />
-              </Col>
-              <Col
-                style={{ display: 'flex', justifyContent: 'end' }}
-                xxl={12}
-                xl={12}
-                lg={12}
-                md={12}
-                sm={12}
-                xs={12}
-              >
-                <Button type='primary' onClick={handleAddFacility}>
-                  Add Facility
-                </Button>
-              </Col>
-            </Row>
-          </>
+          <Row className='table-header'>
+            <Col span={12}>
+              <Search
+                className='search-bar'
+                placeholder='Search facilities'
+                onSearch={handleSearch}
+                enterButton
+              />
+            </Col>
+            <Col span={12} className='add-button-container'>
+              <Button type='primary' onClick={handleAddFacility}>
+                Add Facility
+              </Button>
+            </Col>
+          </Row>
         )}
         columns={columns}
         dataSource={facilities}

@@ -11,6 +11,7 @@ import {
   DatePicker,
   Select,
 } from 'antd';
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import '../styles.css';
 
 const { Search } = Input;
@@ -35,7 +36,6 @@ const InReferral = () => {
     },
     {
       id: 2,
-      inreferralNumber: '002',
       patientName: 'Jane',
       facilityName: 'B.',
       practitionerName: 'Smith',
@@ -60,8 +60,8 @@ const InReferral = () => {
   const handleSearch = (value) => {
     const filteredInreferrals = dummyInreferrals.filter(
       (inreferral) =>
-        inreferral.firstName.toLowerCase().includes(value.toLowerCase()) ||
-        inreferral.lastName.toLowerCase().includes(value.toLowerCase())
+        inreferral.patientName.toLowerCase().includes(value.toLowerCase()) ||
+        inreferral.facilityName.toLowerCase().includes(value.toLowerCase())
     );
     setInreferrals(filteredInreferrals);
   };
@@ -119,18 +119,23 @@ const InReferral = () => {
       key: 'practitionerName',
     },
     { title: 'Entry Date', dataIndex: 'entryDate', key: 'entryDate' },
-
     { title: 'Reason', dataIndex: 'reason', key: 'reason' },
     {
       title: 'Actions',
       key: 'actions',
-      width: '150px',
+      width: '100px',
       render: (text, record) => (
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Button onClick={() => handleEditInreferral(record)}>Edit</Button>
-          <Button onClick={() => handleDeleteInreferral(record.id)} danger>
-            Delete
-          </Button>
+          <Button
+            icon={<EditOutlined style={{ fontSize: '12px', color: '#1890ff' }} />}
+            onClick={() => handleEditInreferral(record)}
+            style={{ marginRight: 8 }}
+          />
+          <Button
+            icon={<DeleteOutlined style={{ fontSize: '12px' }} />}
+            onClick={() => handleDeleteInreferral(record.id)}
+            danger
+          />
         </div>
       ),
     },
@@ -173,7 +178,7 @@ const InReferral = () => {
           <Row gutter={16}>
             <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
               <Form.Item
-                name='patient_name'
+                name='patientName'
                 label='Patient Name'
                 rules={[
                   { required: true, message: 'Please enter the patient name' },
@@ -184,7 +189,7 @@ const InReferral = () => {
             </Col>
             <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
               <Form.Item
-                name='facility_name'
+                name='facilityName'
                 label='Facility Name'
                 rules={[
                   { required: true, message: 'Please enter the facility name' },
@@ -195,7 +200,7 @@ const InReferral = () => {
             </Col>
             <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
               <Form.Item
-                name='practitioner_name'
+                name='practitionerName'
                 label='Practitioner Name'
                 rules={[
                   {
